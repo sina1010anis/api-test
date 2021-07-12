@@ -39,15 +39,14 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
     public function render($request, Throwable $e)
     {
-        if ($e instanceof ModelNotFoundException){
-            if ($request->expectsJson()){
-                return response()->json(['data'=>'Not Fund' ,'status' => 'ERR' ], 404);
-            }else{
-                return parent::render($request, $e);
-            }
-        }
-
+/*        if ($e instanceof ModelNotFoundException) {
+            return response()->json(['data' => 'Not Fund', 'status' => 'ERR'], 404);
+        } else {
+            return parent::render($request, $e);
+        }*/
+        return parent::render($request, $e);
     }
 }

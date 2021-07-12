@@ -13,8 +13,11 @@ use App\Http\Controllers\Api\v1\ArticelController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('citys' ,[ArticelController::class , 'index']);
-Route::get('city/{id}' ,[ArticelController::class , 'show']);
-/*Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
+Route::get('all' ,[ArticelController::class , 'index']);
+Route::get('/one/{id}' ,[ArticelController::class , 'show']);
+Route::post('/new/item' ,[ArticelController::class , 'store']);
+Route::post('login' , [\App\Http\Controllers\Api\v1\UserController::class , 'login']);
+Route::post('register' , [\App\Http\Controllers\Api\v1\UserController::class , 'register']);
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return auth()->user()->id;
+});
