@@ -21,3 +21,4 @@ Route::post('register' , [\App\Http\Controllers\Api\v1\UserController::class , '
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return auth()->user()->id;
 });
+Route::post('/upload' , [ArticelController::class , 'upload']);

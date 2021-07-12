@@ -36,7 +36,7 @@ class ArticelController extends Controller
 
     public function store(NewItemApi $request)
     {
-        /*
+
         $msg = [
 
             'name|required' => 'نام خالی است',
@@ -47,21 +47,28 @@ class ArticelController extends Controller
         $val = $request->validate([
             'name' => 'required|min:2;=|max:50',
             'body' => 'required',
-        ], $msg);*/
-        return $request->all();
-        /*        $val = Validator::make($request->all() , [
-                    'name' => 'required|min:2;=|max:50',
-                    'body' => 'required',
-                ]);
-                if ($val->fails()){
-                    return response()->json([
-                        'data' => $val->errors(),
-                        'msg' => 'err'
-                    ],422);
-                }else{
-                    return response()->json([
-                        'data' => $request->all()
-                    ]);
-                }*/
+        ], $msg);
+        $val = Validator::make($request->all(), [
+            'name' => 'required|min:2;=|max:50',
+            'body' => 'required',
+        ]);
+        if ($val->fails()) {
+            return response()->json([
+                'data' => $val->errors(),
+                'msg' => 'err'
+            ], 422);
+        } else {
+            return response()->json([
+                'data' => $request->all()
+            ]);
+        }
+    }
+    public function upload(Request $request){
+        $v= $request->validate([
+            'image' => 'required|min:102|max:10240|mimes:png,jpg'
+        ]);
+        $tmp = $request->file('image');
+        $tmp->move(public_path('img/') , $tmp->getClientOriginalName());
+        return '<img src="'.url('img/'.$tmp->getClientOriginalName()).'" />';
     }
 }
