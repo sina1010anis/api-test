@@ -2,22 +2,11 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Exceptions\NotFoundError;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\NewItemApi;
-use App\Http\Resources\Article;
-use App\Http\Resources\ArticleCollection;
-use App\Http\Resources\BankCollection;
-use App\Http\Resources\CityCollection;
-use App\Http\Resources\MenuCollection;
-use App\Models\articel;
+use App\Http\Requests\UploadFileRequest;
 use App\Models\Bank;
-use App\Models\City;
-use App\Models\menu;
-use App\Models\State;
-use Illuminate\Auth\Events\Validated;
+use App\repository\Api\File\UploadFile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ArticelController extends Controller
@@ -34,22 +23,10 @@ class ArticelController extends Controller
         return new \App\Http\Resources\Bank($id);
     }
 
-    public function store(NewItemApi $request)
+    public function store(Request $request)
     {
-
-        $msg = [
-
-            'name|required' => 'نام خالی است',
-            'name|min' => 'کمتر از 2 کارکتر برای نام مجاز نیست',
-            'name|max' => 'بیشتر از 50 کارکتر برای نام مجاز نیست',
-            'body|required' => 'متن را وارد نکرده ایید',
-        ];
-        $val = $request->validate([
-            'name' => 'required|min:2;=|max:50',
-            'body' => 'required',
-        ], $msg);
         $val = Validator::make($request->all(), [
-            'name' => 'required|min:2;=|max:50',
+            'name' => 'required|min:2|max:50',
             'body' => 'required',
         ]);
         if ($val->fails()) {
@@ -63,12 +40,7 @@ class ArticelController extends Controller
             ]);
         }
     }
-    public function upload(Request $request){
-        $v= $request->validate([
-            'image' => 'required|min:102|max:10240|mimes:png,jpg'
-        ]);
-        $tmp = $request->file('image');
-        $tmp->move(public_path('img/') , $tmp->getClientOriginalName());
-        return '<img src="'.url('img/'.$tmp->getClientOriginalName()).'" />';
+    public function upload(UploadFileRequest $request , UploadFile $uploadFile){
+        $uploadFile->upload($request)->view();
     }
 }
