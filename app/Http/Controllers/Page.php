@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bank;
+use App\Models\Card;
 use App\repository\Core\Show;
 use App\repository\Filter\Id;
 use App\repository\Filter\Sort;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 
@@ -14,19 +16,27 @@ class Page extends Controller
 {
     public function test()
     {
-        $data = app(Pipeline::class)
-            ->send(Bank::query())
-            ->through([
-                Sort::class,
-                Id::class
-            ])
-            ->thenReturn()
-            ->get();
-        if ($data->count() > 0)
+        echo '5'.'<br>';
+        echo 'AbxSe'.'<br>';
+        echo 'AbXse'.'<br>';
+        echo '2'.'<br>';
+
+//        $data = Card::all();
+//        return Relation::morphMap([
+//            'data' => $data->map(function ($item , $key){
+//                return [
+//                  'number' => $item->number,
+//                  'time_set' => $item->created_at
+//                ];
+//            }),
+//        ]);
+    	//return view('welcome');
+        /*$data = app(Pipeline::class)->send(Bank::query())->through([Sort::class, Id::class])->thenReturn()->get();
+        if ($data->count()
+        > 0)
             return $data;
         else
-            abort(404);
-
+            abort(404);*/
 
         //$show = new Show("test");
         //$show->edit('89764232118')->show();

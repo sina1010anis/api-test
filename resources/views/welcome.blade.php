@@ -1,4 +1,11 @@
-{{$bank}}
+@php
+    $n = false;
+    $s = 5;
+    if($s == 5){
+        $n=true;
+    }
+@endphp
+<pre style='width: 100%;height:200px!important;background: red' @class(['item' => $n])>test</pre>
 {{--
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">

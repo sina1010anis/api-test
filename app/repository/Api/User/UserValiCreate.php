@@ -47,6 +47,7 @@ class UserValiCreate extends Controller
                 'status' => 'error',
             ] , 403);
         }else{
+            return auth()->user()->createToken('Api Token on Android')->accessToken;
             return new \App\Http\Resources\User(auth()->user());
         }
     }

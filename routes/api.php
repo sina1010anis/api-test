@@ -19,6 +19,6 @@ Route::post('/new/item' ,[ArticelController::class , 'store']);
 Route::post('login' , [\App\Http\Controllers\Api\v1\UserController::class , 'login']);
 Route::post('register' , [\App\Http\Controllers\Api\v1\UserController::class , 'register']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return auth()->user()->id;
+    return new \App\Http\Resources\UserPassport(auth()->user());
 });
 Route::post('/upload' , [ArticelController::class , 'upload']);
